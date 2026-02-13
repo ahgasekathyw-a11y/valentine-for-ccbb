@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restricted Access 🔒</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
 
     <style>
         body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #ffe6e6;
-            color: #d63384;
+            font-family: 'Lora', serif; /* Elegant body font */
+            background-color: #fff5f5; /* Softer, creamier pink */
+            color: #7a2a46; /* Deeper, more sophisticated wine-red */
             text-align: center;
             margin: 0;
             padding: 0;
@@ -24,25 +24,39 @@
             align-items: center;
         }
 
+        /* --- TITLES (Elegant Serif) --- */
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin: 15px;
+            line-height: 1.3;
+            color: #b53d5f;
+        }
+
+        h1 { font-size: 2.2em; font-style: italic; }
+
         /* --- SCREEN 1: LOGIN --- */
         #screen-login {
             background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 50px;
+            border-radius: 5px; /* Sharp, clean edges for elegance */
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
             z-index: 10;
+            border: 1px solid #f2d7d7;
         }
 
         input {
-            padding: 10px;
-            font-size: 1.2rem;
-            border: 2px solid #ffb3b3;
-            border-radius: 10px;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #d9a7a7;
+            border-radius: 0; /* Modern flat look */
             text-align: center;
             outline: none;
+            font-family: 'Lora', serif;
         }
 
         /* --- SCREEN 2: THE QUESTION --- */
@@ -55,66 +69,63 @@
         }
 
         .my-face {
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            border: 6px solid white;
+            border: 3px solid #f2d7d7;
             object-fit: cover; 
-            box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3);
-            margin-bottom: 20px;
-            animation: bounce 2s infinite; 
-        }
-
-        h1 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 2.5em;
-            margin: 10px;
-            line-height: 1.2;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
         }
 
         .nickname {
-            color: #ff4d4d;
-            font-size: 1.2em;
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: #d9a7a7;
+            font-size: 1.3em;
+            margin-bottom: -5px;
         }
 
         .buttons {
-            margin-top: 30px;
+            margin-top: 40px;
             display: flex;
-            gap: 20px;
+            gap: 25px;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
+            padding: 12px 35px;
+            font-size: 1rem;
+            border: 1px solid #b53d5f;
+            background: none;
+            color: #b53d5f;
             cursor: pointer;
-            font-family: 'Fredoka One', cursive;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
         }
 
         #yes-btn {
-            background-color: #ff4d4d;
+            background-color: #b53d5f;
             color: white;
-            z-index: 5; 
+        }
+
+        #yes-btn:hover {
+            background-color: #7a2a46;
         }
 
         #no-btn {
-            background-color: #ffffff;
-            color: #ff4d4d;
-            border: 2px solid #ff4d4d;
+            background-color: white;
         }
 
         .play-again-btn {
-            background-color: white !important;
-            color: #d63384 !important;
-            border: 2px solid #d63384 !important;
-            margin-top: 30px;
-            font-size: 1rem !important;
+            margin-top: 50px;
+            font-size: 0.8rem !important;
+            border-color: #d9a7a7 !important;
+            color: #d9a7a7 !important;
         }
 
         /* --- SCREEN 3: ANGRY OVERLAY --- */
@@ -122,13 +133,13 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #ff0000;
-            color: white;
+            background: #4a1024; /* Darker, more dramatic red */
+            color: #fff;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 999; 
-            animation: shake 0.5s;
+            animation: fadeIn 0.5s;
         }
 
         /* --- SCREEN 4: THE GIFTS --- */
@@ -136,84 +147,110 @@
             display: none;
             width: 90%;
             max-width: 500px;
-            padding-top: 20px;
-            padding-bottom: 50px;
+            padding-bottom: 60px;
         }
 
         details {
             background: white;
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #f2d7d7;
+            padding: 20px 0;
+            margin-bottom: 10px;
             text-align: left;
             cursor: pointer;
         }
         
         summary {
-            font-weight: bold;
+            font-family: 'Playfair Display', serif;
             font-size: 1.2rem;
             list-style: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: #7a2a46;
         }
         
-        summary::after { content: '👇'; }
-        details[open] summary::after { content: '❤️'; }
+        summary::after { content: '+'; font-weight: 300; }
+        details[open] summary::after { content: '-'; }
 
         .gift-content {
             margin-top: 15px;
-            border-top: 2px dashed #ffb3b3;
-            padding-top: 10px;
+            font-size: 0.95em;
+            color: #555;
+            animation: fadeIn 0.6s;
         }
 
-        .gift-content img, .gift-content video { width: 100%; border-radius: 10px; margin-top: 10px; }
+        .gift-content img, .gift-content video { width: 100%; margin-top: 15px; }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        /* --- ELEGANT TICKET --- */
+        .ticket {
+            border: 1px solid #b53d5f;
+            padding: 25px;
+            margin-top: 15px;
+            text-align: center;
+            position: relative;
         }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+
+        .ticket-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            color: #b53d5f;
         }
+
+        .ticket-highlight {
+            font-size: 1.6rem;
+            font-style: italic;
+            display: block;
+            margin: 15px 0;
+            color: #7a2a46;
+        }
+
+        .ticket-footer {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            color: #aaa;
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <div id="screen-login">
-        <h2>🔒 Security Check</h2>
-        <p style="font-weight: bold;">Input the password:</p>
+        <h2>Authentication</h2>
+        <p>Input the password:</p>
         <input type="password" id="password-input" placeholder="...">
-        <button onclick="checkPassword()" style="background:#d63384; color:white; margin-top:10px;">Enter</button>
-        <p id="error-msg" style="color:red; display:none;">Access Denied</p>
+        <button onclick="checkPassword()" style="margin-top:10px;">Enter</button>
+        <p id="error-msg" style="color:red; display:none; font-size: 0.8em;">Access Denied</p>
     </div>
 
     <div id="screen-question">
         <img src="my-face.jpeg" alt="My Face" class="my-face" onerror="this.src='https://via.placeholder.com/150'">
         
-        <h1 class="nickname">Hey 羅婆別!</h1>
+        <p class="nickname">Hey 羅婆別</p>
         <h1>Will you be my Valentine?</h1>
         
         <div class="buttons">
-            <button id="yes-btn" onclick="sayYes()">YES!</button>
+            <button id="yes-btn" onclick="sayYes()">Yes</button>
             <button id="no-btn" onclick="clickNo()">No</button>
         </div>
     </div>
 
     <div id="screen-angry">
-        <h1 style="font-size: 4em;">I DON'T TAKE NO<br>FOR AN ANSWER! 😤</h1>
-        <p>(Resetting game...)</p>
+        <h1>I don't take "no" for an answer.</h1>
     </div>
 
     <div id="screen-gifts">
-        <h1>Yay! I love you bb! ❤️</h1>
-        <p>Here's four presents your perfect girlfriend prepared for you:</p>
+        <h1>Yay! I love you bb</h1>
+        <p>Here's three presents your perfect girlfriend prepared for you:</p>
         
         <details>
-            <summary>🎁 Gift 1: A Memory</summary>
+            <summary>I. A Memory</summary>
             <div class="gift-content">
                 <p>Remember this day? I miss this so much.</p>
                 <img src="gift1.jpg" alt="Memory" onerror="this.style.display='none'">
@@ -221,9 +258,9 @@
         </details>
 
         <details>
-            <summary>💃 Gift 2: For Your Eyes Only</summary>
+            <summary>II. For Your Eyes Only</summary>
             <div class="gift-content">
-                <p>A little dance just for you!</p>
+                <p>A little dance just for you.</p>
                 <video controls>
                     <source src="dance.mp4" type="video/mp4">
                     Your browser does not support the video tag.
@@ -232,31 +269,34 @@
         </details>
 
         <details>
-            <summary>🎵 Gift 3: Our Song</summary>
+            <summary>III. Our Song</summary>
             <div class="gift-content">
-                <p>Listen to this and think of me...</p>
-                <a href="https://open.spotify.com" target="_blank" style="color: #ff4d4d; font-weight: bold; font-size: 1.2rem;">
-                    ▶️ Click to Play on Spotify
+                <p>Listen to this and think of me.</p>
+                <a href="https://open.spotify.com" target="_blank" style="color: #b53d5f; text-decoration: none; border-bottom: 1px solid #b53d5f;">
+                    Open Spotify
                 </a>
             </div>
         </details>
 
         <details>
-            <summary>🎟️ Gift 4: Special Coupon</summary>
-            <div class="gift-content" style="text-align: center;">
-                <h3 style="color: #ff4d4d;">✨ The Ultimate Pass ✨</h3>
-                <p style="font-size: 1.1rem; border: 2px dashed #ff4d4d; padding: 10px; border-radius: 10px;">
-                    This coupon is good for <b>one BJ</b> that can go as long as you want. 
-                </p>
-                <p style="font-size: 0.9rem; margin-top: 10px;">Redeemable upon arrival. 😉</p>
+            <summary>IV. Special Coupon</summary>
+            <div class="ticket">
+                <div class="ticket-header">Official Voucher</div>
+                <div class="ticket-body">
+                    This coupon entitles the bearer to
+                    <span class="ticket-highlight">One BJ</span>
+                    of unlimited duration.
+                </div>
+                <div class="ticket-footer">
+                    V00214 • REDEEMABLE UPON ARRIVAL
+                </div>
             </div>
         </details>
 
-        <button class="play-again-btn" onclick="playAgain()">🔄 Play Again</button>
+        <button class="play-again-btn" onclick="playAgain()">Return to beginning</button>
     </div>
 
     <script>
-        // Updated with your hash
         const SECRET_HASH = "25aa08191e0e6dc204c6f67ca6ff5ca3"; 
 
         function checkPassword() {
@@ -268,23 +308,13 @@
                 document.getElementById('screen-question').style.display = 'flex';
             } else {
                 document.getElementById('error-msg').style.display = 'block';
-                document.getElementById('screen-login').style.animation = "shake 0.5s";
-                setTimeout(() => document.getElementById('screen-login').style.animation = "", 500);
             }
         }
 
         let noClicks = 0;
         const maxNoClicks = 20; 
-        let yesSize = 1.2; 
-        let noSize = 1.2; 
-
-        const noTexts = [
-            "Are you sure?", "Really?", "Think again!", "Last chance!", 
-            "Don't do this!", "You're breaking my heart!", "羅婆別 please!", 
-            "I'm going to cry...", "Wrong button!", "Try the RED one!",
-            "Stop clicking me!", "I'm warning you...", "Seriously?",
-            "Look at my face!", "Be nice!", "Just click YES!"
-        ];
+        let yesSize = 1; 
+        let noSize = 1; 
 
         function clickNo() {
             noClicks++;
@@ -295,36 +325,24 @@
                     resetGame();
                 }, 3000);
             } else {
-                yesSize += 0.4; 
-                document.getElementById('yes-btn').style.fontSize = yesSize + 'rem';
-                noSize -= 0.05;
-                if (noSize < 0.5) noSize = 0.5;
-                document.getElementById('no-btn').style.fontSize = noSize + 'rem';
-                const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
-                document.getElementById('no-btn').innerText = randomText;
+                yesSize += 0.3; 
+                document.getElementById('yes-btn').style.transform = `scale(${yesSize})`;
+                noSize -= 0.04;
+                if (noSize < 0.6) noSize = 0.6;
+                document.getElementById('no-btn').style.transform = `scale(${noSize})`;
             }
         }
 
         function resetGame() {
-            noClicks = 0;
-            yesSize = 1.2;
-            noSize = 1.2;
-            document.getElementById('yes-btn').style.fontSize = '1.2rem';
-            document.getElementById('no-btn').style.fontSize = '1.2rem';
-            document.getElementById('no-btn').innerText = "No";
+            noClicks = 0; yesSize = 1; noSize = 1;
+            document.getElementById('yes-btn').style.transform = 'scale(1)';
+            document.getElementById('no-btn').style.transform = 'scale(1)';
         }
 
         function sayYes() {
             document.getElementById('screen-question').style.display = 'none';
             document.getElementById('screen-gifts').style.display = 'block';
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            let duration = 3000;
-            let end = Date.now() + duration;
-            (function frame() {
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#b53d5f', '#ffc0cb', '#ffffff'] });
         }
 
         function playAgain() {
