@@ -109,7 +109,6 @@
             border: 2px solid #ff4d4d;
         }
 
-        /* Play Again Button Style */
         .play-again-btn {
             background-color: white !important;
             color: #d63384 !important;
@@ -169,7 +168,7 @@
             padding-top: 10px;
         }
 
-        .gift-content img { width: 100%; border-radius: 10px; margin-top: 10px; }
+        .gift-content img, .gift-content video { width: 100%; border-radius: 10px; margin-top: 10px; }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
@@ -211,7 +210,7 @@
 
     <div id="screen-gifts">
         <h1>Yay! I love you bb! ❤️</h1>
-        <p>Here's three presents your perfect girlfriend prepared for you:</p>
+        <p>Here's four presents your perfect girlfriend prepared for you:</p>
         
         <details>
             <summary>🎁 Gift 1: A Memory</summary>
@@ -222,10 +221,13 @@
         </details>
 
         <details>
-            <summary>✈️ Gift 2: The Distance</summary>
+            <summary>💃 Gift 2: For Your Eyes Only</summary>
             <div class="gift-content">
-                <p>The miles don't matter when it's us.</p>
-                <img src="gift2.jpg" alt="Distance" onerror="this.style.display='none'">
+                <p>A little dance just for you!</p>
+                <video controls>
+                    <source src="dance.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
         </details>
 
@@ -233,9 +235,20 @@
             <summary>🎵 Gift 3: Our Song</summary>
             <div class="gift-content">
                 <p>Listen to this and think of me...</p>
-                <a href="https://open.spotify.com/" target="_blank" style="color: #ff4d4d; font-weight: bold; font-size: 1.2rem;">
+                <a href="https://open.spotify.com" target="_blank" style="color: #ff4d4d; font-weight: bold; font-size: 1.2rem;">
                     ▶️ Click to Play on Spotify
                 </a>
+            </div>
+        </details>
+
+        <details>
+            <summary>🎟️ Gift 4: Special Coupon</summary>
+            <div class="gift-content" style="text-align: center;">
+                <h3 style="color: #ff4d4d;">✨ The Ultimate Pass ✨</h3>
+                <p style="font-size: 1.1rem; border: 2px dashed #ff4d4d; padding: 10px; border-radius: 10px;">
+                    This coupon is good for <b>one BJ</b> that can go as long as you want. 
+                </p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">Redeemable upon arrival. 😉</p>
             </div>
         </details>
 
@@ -243,11 +256,9 @@
     </div>
 
     <script>
-        // --- CONFIGURATION ---
-        // ⚠️ DON'T FORGET TO PASTE YOUR HASH HERE
+        // Updated with your hash
         const SECRET_HASH = "25aa08191e0e6dc204c6f67ca6ff5ca3"; 
 
-        // --- PASSWORD LOGIC ---
         function checkPassword() {
             const input = document.getElementById('password-input').value;
             const inputHash = md5(input); 
@@ -262,7 +273,6 @@
             }
         }
 
-        // --- GAME LOGIC ---
         let noClicks = 0;
         const maxNoClicks = 20; 
         let yesSize = 1.2; 
@@ -278,7 +288,6 @@
 
         function clickNo() {
             noClicks++;
-            
             if (noClicks >= maxNoClicks) {
                 document.getElementById('screen-angry').style.display = 'flex';
                 setTimeout(() => {
@@ -288,11 +297,9 @@
             } else {
                 yesSize += 0.4; 
                 document.getElementById('yes-btn').style.fontSize = yesSize + 'rem';
-                
                 noSize -= 0.05;
                 if (noSize < 0.5) noSize = 0.5;
                 document.getElementById('no-btn').style.fontSize = noSize + 'rem';
-
                 const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
                 document.getElementById('no-btn').innerText = randomText;
             }
@@ -310,12 +317,9 @@
         function sayYes() {
             document.getElementById('screen-question').style.display = 'none';
             document.getElementById('screen-gifts').style.display = 'block';
-            
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            
             let duration = 3000;
             let end = Date.now() + duration;
-
             (function frame() {
                 confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
                 confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
@@ -329,6 +333,5 @@
             resetGame();
         }
     </script>
-
 </body>
 </html>
