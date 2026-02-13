@@ -3,33 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Valentine ❤️</title>
+    <title>For Chun ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
 
     <style>
         body {
             font-family: 'Nunito', sans-serif;
-            background-color: #ffe6e6;
+            background-color: #ffe6e6; /* Pink Background */
+            color: #d63384;
             text-align: center;
             margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
+            padding: 0;
+            overflow-x: hidden; /* Prevents scrollbars when buttons move */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- SCREEN 1: LOGIN (LOCK) --- */
+        #screen-login {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 2px solid #ffb3b3;
+            border-radius: 10px;
+            text-align: center;
+            outline: none;
+        }
+
+        /* --- SCREEN 2: THE QUESTION --- */
+        #screen-question {
+            display: none; /* Hidden until logged in */
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Your Face Styling */
+        .my-face {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%; /* Circle shape */
+            border: 6px solid white;
+            object-fit: cover; /* Crops image perfectly */
+            box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3);
+            margin-bottom: 20px;
+            animation: bounce 2s infinite; /* Bouncing animation */
         }
 
         h1 {
-            color: #d63384;
             font-family: 'Fredoka One', cursive;
             font-size: 2.5em;
+            margin: 10px;
+            line-height: 1.2;
         }
 
-        /* --- SCREEN 1: THE QUESTION --- */
-        #screen-question {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 90vh;
+        .nickname {
+            color: #ff4d4d;
+            font-size: 1.2em;
         }
 
         .buttons {
@@ -39,6 +85,7 @@
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
+            position: relative; /* Needed for moving button */
         }
 
         button {
@@ -47,14 +94,15 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s;
             font-family: 'Fredoka One', cursive;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         #yes-btn {
             background-color: #ff4d4d;
             color: white;
-            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.4);
+            z-index: 5; /* Keeps Yes button on top */
         }
 
         #no-btn {
@@ -63,155 +111,274 @@
             border: 2px solid #ff4d4d;
         }
 
-        /* --- SCREEN 2: THE GIFTS --- */
-        #screen-gifts {
-            display: none; /* Hidden initially */
-            padding-top: 20px;
-        }
-
-        .gift-container {
-            display: flex;
+        /* --- SCREEN 3: "ANGRY" OVERLAY --- */
+        #screen-angry {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #ff0000;
+            color: white;
             flex-direction: column;
-            gap: 20px;
-            max-width: 500px;
-            margin: 0 auto;
+            justify-content: center;
+            align-items: center;
+            z-index: 999; /* On top of everything */
+            animation: shake 0.5s;
         }
 
-        /* The "Gift Box" styling */
+        /* --- SCREEN 4: THE GIFTS --- */
+        #screen-gifts {
+            display: none;
+            width: 90%;
+            max-width: 500px;
+            padding-top: 20px;
+            padding-bottom: 50px;
+        }
+
+        /* Gift Box Styles */
         details {
             background: white;
             border-radius: 15px;
-            padding: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: left;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
-
-        details[open] {
-            background: #fff0f5;
-            transform: scale(1.02);
-        }
-
+        
         summary {
-            list-style: none; /* Hides default triangle */
             font-weight: bold;
             font-size: 1.2rem;
-            color: #d63384;
-            padding: 15px;
+            list-style: none;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+        }
+        
+        /* Custom arrow for gifts */
+        summary::after {
+            content: '👇'; 
+        }
+        details[open] summary::after {
+            content: '❤️';
         }
 
-        /* Custom Content inside the gift */
         .gift-content {
-            padding: 15px;
+            margin-top: 15px;
             border-top: 2px dashed #ffb3b3;
-            animation: fadeIn 0.5s;
+            padding-top: 10px;
         }
 
-        .gift-content img {
-            width: 100%;
-            border-radius: 10px;
-            margin-top: 10px;
+        .gift-content img { 
+            width: 100%; 
+            border-radius: 10px; 
+            margin-top: 10px; 
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Animations */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
     </style>
 </head>
 <body>
 
+    <div id="screen-login">
+        <h2>🔒 Chun's Security Check</h2>
+        <p>What is my nickname for you?</p>
+        <input type="password" id="password-input" placeholder="Type here...">
+        <button onclick="checkPassword()" style="background:#d63384; color:white; margin-top:10px;">Enter</button>
+        <p id="error-msg" style="color:red; display:none;">Wrong! Try again!</p>
+    </div>
+
     <div id="screen-question">
-        <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Cute Bear" style="width: 200px; border-radius: 20px;">
+        <img src="my-face.jpg" alt="My Face" class="my-face" onerror="this.src='https://via.placeholder.com/150'">
+        
+        <h1 class="nickname">Hey 羅婆別!</h1>
         <h1>Will you be my Valentine?</h1>
+        
         <div class="buttons">
             <button id="yes-btn" onclick="sayYes()">YES!</button>
-            <button id="no-btn" onmouseover="moveNo()" onclick="moveNo()">No</button>
+            <button id="no-btn" onclick="clickNo()">No</button>
         </div>
+    </div>
+
+    <div id="screen-angry">
+        <h1 style="font-size: 4em;">I DON'T TAKE NO<br>FOR AN ANSWER! 😤</h1>
+        <p>(Resetting game...)</p>
     </div>
 
     <div id="screen-gifts">
-        <h1>Yay! I knew it! ❤️</h1>
-        <p>Since I can't be there, here are your gifts:</p>
+        <h1>Yay! I love you Chun! ❤️</h1>
+        <p>Since I'm GMT+8 ahead of you, I prepared these:</p>
         
-        <div class="gift-container">
-            
-            <details>
-                <summary>🎁 Gift #1: A Memory</summary>
-                <div class="gift-content">
-                    <p>Remember this day? I miss this so much.</p>
-                    <img src="https://media.giphy.com/media/4N1wOi78ZGzLC/giphy.gif" alt="Memory">
-                </div>
-            </details>
+        <details>
+            <summary>🎁 Gift 1: A Memory</summary>
+            <div class="gift-content">
+                <p>Remember this day? I miss this so much.</p>
+                <img src="gift1.jpg" alt="Memory" onerror="this.style.display='none'">
+            </div>
+        </details>
 
-            <details>
-                <summary>🎟️ Gift #2: A Coupon</summary>
-                <div class="gift-content">
-                    <h3>Good for ONE Movie Night 🎬</h3>
-                    <p>Redeemable whenever you want. I pick the movie though!</p>
-                    <p style="font-size: 30px;">🍿</p>
-                </div>
-            </details>
+        <details>
+            <summary>✈️ Gift 2: The Distance</summary>
+            <div class="gift-content">
+                <p>The miles don't matter when it's us.</p>
+                <img src="gift2.jpg" alt="Distance" onerror="this.style.display='none'">
+            </div>
+        </details>
 
-            <details>
-                <summary>🎵 Gift #3: Our Song</summary>
-                <div class="gift-content">
-                    <p>Listen to this and think of me...</p>
-                    <a href="https://open.spotify.com/track/YOUR_SONG_LINK" target="_blank" style="color: #d63384; font-weight: bold;">
-                        Click here to listen on Spotify
-                    </a>
-                </div>
-            </details>
-
-        </div>
+        <details>
+            <summary>🎵 Gift 3: Our Song</summary>
+            <div class="gift-content">
+                <p>Listen to this and think of me...</p>
+                <a href="https://open.spotify.com/" target="_blank" style="color: #ff4d4d; font-weight: bold; font-size: 1.2rem;">
+                    ▶️ Click to Play on Spotify
+                </a>
+            </div>
+        </details>
     </div>
 
     <script>
-        let yesBtnSize = 1.2; // Initial font size
+        // --- 1. CONFIGURATION ---
+        
+        // ⚠️ STEP 1: Go to md5hashgenerator.com
+        // ⚠️ STEP 2: Type your password (e.g., love123)
+        // ⚠️ STEP 3: Paste the Result below inside the quotes
+        const SECRET_HASH = "ceaa386e6436db4ff51670968f349e58"; 
 
-        function moveNo() {
-            // OPTION 1: Make the YES button bigger every time he tries to click NO
-            yesBtnSize += 0.4;
-            document.getElementById('yes-btn').style.fontSize = yesBtnSize + 'rem';
+
+        // --- 2. PASSWORD LOGIC ---
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            // The md5() function comes from the script we imported at the top
+            const inputHash = md5(input); 
+
+            if (inputHash === SECRET_HASH) {
+                document.getElementById('screen-login').style.display = 'none';
+                document.getElementById('screen-question').style.display = 'flex';
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+                // Shake the box for effect
+                document.getElementById('screen-login').style.animation = "shake 0.5s";
+                setTimeout(() => document.getElementById('screen-login').style.animation = "", 500);
+            }
+        }
+
+        // --- 3. GAME LOGIC ---
+        let noClicks = 0;
+        const maxNoClicks = 20; // Limit set to 20
+        let yesSize = 1.2; 
+
+        // Funny texts for the No button
+        const noTexts = [
+            "Are you sure?", "Really?", "Think again!", "Last chance!", 
+            "Don't do this!", "You're breaking my heart!", "羅婆別 please!", 
+            "I'm going to cry...", "Wrong button!", "Try the RED one!",
+            "Stop clicking me!", "I'm warning you...", "Seriously?",
+            "Look at my face!", "Be nice!", "Just click YES!"
+        ];
+
+        function clickNo() {
+            noClicks++;
             
-            // OPTION 2: Change text of NO button
-            const noTexts = ["Are you sure?", "Really?", "Think again!", "Last chance!", "Don't do this!"];
-            const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
-            document.getElementById('no-btn').innerText = randomText;
+            if (noClicks >= maxNoClicks) {
+                // ANGRY MODE
+                document.getElementById('screen-angry').style.display = 'flex';
+                
+                // Reset game after 3 seconds
+                setTimeout(() => {
+                    document.getElementById('screen-angry').style.display = 'none';
+                    resetGame();
+                }, 3000);
+
+            } else {
+                // STANDARD MODE (Make it harder)
+                
+                // 1. Make YES button bigger
+                yesSize += 0.3; 
+                document.getElementById('yes-btn').style.fontSize = yesSize + 'rem';
+                
+                // 2. Move NO button randomly
+                const noBtn = document.getElementById('no-btn');
+                noBtn.style.position = 'absolute'; // Allows it to move freely
+                
+                // Calculate random position within the container
+                const randomX = Math.random() * (window.innerWidth - 200); 
+                const randomY = Math.random() * (window.innerHeight - 200);
+                
+                // If it's the first few clicks, just move slightly. Later clicks move wildly.
+                if (noClicks < 5) {
+                    noBtn.style.transform = `translate(${Math.random()*100 - 50}px, ${Math.random()*100 - 50}px)`;
+                } else {
+                    noBtn.style.left = randomX + "px";
+                    noBtn.style.top = randomY + "px";
+                }
+
+                // 3. Change Text randomly
+                const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
+                noBtn.innerText = randomText;
+            }
+        }
+
+        function resetGame() {
+            noClicks = 0;
+            yesSize = 1.2;
+            document.getElementById('yes-btn').style.fontSize = '1.2rem';
+            
+            const noBtn = document.getElementById('no-btn');
+            noBtn.innerText = "No";
+            noBtn.style.position = 'static'; // Reset to normal position
+            noBtn.style.transform = 'none';
         }
 
         function sayYes() {
-            // Hide Screen 1
             document.getElementById('screen-question').style.display = 'none';
-            // Show Screen 2
             document.getElementById('screen-gifts').style.display = 'block';
             
-            // Launch Confetti!
+            // Launch Confetti
             confetti({
                 particleCount: 150,
                 spread: 70,
                 origin: { y: 0.6 }
             });
             
-            // Launch more confetti after a delay
-            setTimeout(() => {
+            // Continuous confetti for celebration
+            let duration = 3000;
+            let end = Date.now() + duration;
+
+            (function frame() {
                 confetti({
-                    particleCount: 100,
+                    particleCount: 5,
                     angle: 60,
                     spread: 55,
                     origin: { x: 0 }
                 });
                 confetti({
-                    particleCount: 100,
+                    particleCount: 5,
                     angle: 120,
                     spread: 55,
                     origin: { x: 1 }
                 });
-            }, 500);
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         }
     </script>
 
