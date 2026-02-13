@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Chun ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <title>Restricted Access 🔒</title> <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
 
@@ -16,7 +15,7 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* Prevents scrollbars when buttons move */
+            overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -60,10 +59,10 @@
             height: 180px;
             border-radius: 50%; /* Circle shape */
             border: 6px solid white;
-            object-fit: cover; /* Crops image perfectly */
+            object-fit: cover; 
             box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3);
             margin-bottom: 20px;
-            animation: bounce 2s infinite; /* Bouncing animation */
+            animation: bounce 2s infinite; 
         }
 
         h1 {
@@ -85,7 +84,6 @@
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            position: relative; /* Needed for moving button */
         }
 
         button {
@@ -95,14 +93,14 @@
             border-radius: 50px;
             cursor: pointer;
             font-family: 'Fredoka One', cursive;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease; /* Faster transition */
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         #yes-btn {
             background-color: #ff4d4d;
             color: white;
-            z-index: 5; /* Keeps Yes button on top */
+            z-index: 5; 
         }
 
         #no-btn {
@@ -121,7 +119,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 999; /* On top of everything */
+            z-index: 999; 
             animation: shake 0.5s;
         }
 
@@ -154,13 +152,8 @@
             align-items: center;
         }
         
-        /* Custom arrow for gifts */
-        summary::after {
-            content: '👇'; 
-        }
-        details[open] summary::after {
-            content: '❤️';
-        }
+        summary::after { content: '👇'; }
+        details[open] summary::after { content: '❤️'; }
 
         .gift-content {
             margin-top: 15px;
@@ -179,30 +172,21 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
         }
-        
         @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
     </style>
 </head>
 <body>
 
     <div id="screen-login">
-        <h2>🔒 Chun's Security Check</h2>
-        <p>What is my nickname for you?</p>
-        <input type="password" id="password-input" placeholder="Type here...">
+        <h2>🔒 Security Check</h2>
+        <p style="font-weight: bold;">Input the password:</p>
+        <input type="password" id="password-input" placeholder="...">
         <button onclick="checkPassword()" style="background:#d63384; color:white; margin-top:10px;">Enter</button>
-        <p id="error-msg" style="color:red; display:none;">Wrong! Try again!</p>
+        <p id="error-msg" style="color:red; display:none;">Access Denied</p>
     </div>
 
     <div id="screen-question">
@@ -256,16 +240,13 @@
     <script>
         // --- 1. CONFIGURATION ---
         
-        // ⚠️ STEP 1: Go to md5hashgenerator.com
-        // ⚠️ STEP 2: Type your password (e.g., love123)
-        // ⚠️ STEP 3: Paste the Result below inside the quotes
-        const SECRET_HASH = "ceaa386e6436db4ff51670968f349e58"; 
-
+        // ⚠️ REMINDER: GENERATE YOUR HASH AT md5hashgenerator.com
+        // Paste the result inside the quotes below:
+        const SECRET_HASH = "PASTE_YOUR_GENERATED_HASH_HERE"; 
 
         // --- 2. PASSWORD LOGIC ---
         function checkPassword() {
             const input = document.getElementById('password-input').value;
-            // The md5() function comes from the script we imported at the top
             const inputHash = md5(input); 
 
             if (inputHash === SECRET_HASH) {
@@ -273,7 +254,6 @@
                 document.getElementById('screen-question').style.display = 'flex';
             } else {
                 document.getElementById('error-msg').style.display = 'block';
-                // Shake the box for effect
                 document.getElementById('screen-login').style.animation = "shake 0.5s";
                 setTimeout(() => document.getElementById('screen-login').style.animation = "", 500);
             }
@@ -281,10 +261,10 @@
 
         // --- 3. GAME LOGIC ---
         let noClicks = 0;
-        const maxNoClicks = 20; // Limit set to 20
+        const maxNoClicks = 20; 
         let yesSize = 1.2; 
+        let noSize = 1.2; 
 
-        // Funny texts for the No button
         const noTexts = [
             "Are you sure?", "Really?", "Think again!", "Last chance!", 
             "Don't do this!", "You're breaking my heart!", "羅婆別 please!", 
@@ -300,84 +280,49 @@
                 // ANGRY MODE
                 document.getElementById('screen-angry').style.display = 'flex';
                 
-                // Reset game after 3 seconds
                 setTimeout(() => {
                     document.getElementById('screen-angry').style.display = 'none';
                     resetGame();
                 }, 3000);
 
             } else {
-                // STANDARD MODE (Make it harder)
-                
-                // 1. Make YES button bigger
-                yesSize += 0.3; 
+                // MAKE YES BIGGER
+                yesSize += 0.4; 
                 document.getElementById('yes-btn').style.fontSize = yesSize + 'rem';
                 
-                // 2. Move NO button randomly
-                const noBtn = document.getElementById('no-btn');
-                noBtn.style.position = 'absolute'; // Allows it to move freely
-                
-                // Calculate random position within the container
-                const randomX = Math.random() * (window.innerWidth - 200); 
-                const randomY = Math.random() * (window.innerHeight - 200);
-                
-                // If it's the first few clicks, just move slightly. Later clicks move wildly.
-                if (noClicks < 5) {
-                    noBtn.style.transform = `translate(${Math.random()*100 - 50}px, ${Math.random()*100 - 50}px)`;
-                } else {
-                    noBtn.style.left = randomX + "px";
-                    noBtn.style.top = randomY + "px";
-                }
+                // MAKE NO SMALLER
+                noSize -= 0.05;
+                if (noSize < 0.5) noSize = 0.5;
+                document.getElementById('no-btn').style.fontSize = noSize + 'rem';
 
-                // 3. Change Text randomly
+                // CHANGE TEXT
                 const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
-                noBtn.innerText = randomText;
+                document.getElementById('no-btn').innerText = randomText;
             }
         }
 
         function resetGame() {
             noClicks = 0;
             yesSize = 1.2;
+            noSize = 1.2;
             document.getElementById('yes-btn').style.fontSize = '1.2rem';
-            
-            const noBtn = document.getElementById('no-btn');
-            noBtn.innerText = "No";
-            noBtn.style.position = 'static'; // Reset to normal position
-            noBtn.style.transform = 'none';
+            document.getElementById('no-btn').style.fontSize = '1.2rem';
+            document.getElementById('no-btn').innerText = "No";
         }
 
         function sayYes() {
             document.getElementById('screen-question').style.display = 'none';
             document.getElementById('screen-gifts').style.display = 'block';
             
-            // Launch Confetti
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             
-            // Continuous confetti for celebration
             let duration = 3000;
             let end = Date.now() + duration;
 
             (function frame() {
-                confetti({
-                    particleCount: 5,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 }
-                });
-                confetti({
-                    particleCount: 5,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 }
-                });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) requestAnimationFrame(frame);
             }());
         }
     </script>
