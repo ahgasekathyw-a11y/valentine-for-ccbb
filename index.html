@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restricted Access 🔒</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
 
     <style>
         body {
-            font-family: 'Lora', serif;
-            background-color: #fff5f5;
-            color: #7a2a46;
+            font-family: 'Nunito', sans-serif; /* Back to the cute round font */
+            background-color: #ffe6e6; /* Back to the cute pink */
+            color: #d63384;
             text-align: center;
             margin: 0;
             padding: 0;
@@ -24,36 +26,37 @@
             align-items: center;
         }
 
+        /* --- THE NEW ELEGANT TITLES --- */
         h1, h2 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 400;
-            letter-spacing: 1px;
-            margin: 15px;
-            line-height: 1.3;
-            color: #b53d5f;
+            font-family: 'Playfair Display', serif; /* Elegant font */
+            font-weight: 700;
+            font-style: italic;
+            margin: 10px;
+            line-height: 1.2;
         }
 
-        h1 { font-size: 2.2em; font-style: italic; }
+        h1 { font-size: 2.8em; }
 
+        /* --- RESTORED CUTE UI --- */
         #screen-login {
             background: white;
-            padding: 50px;
-            border-radius: 5px;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+            padding: 40px;
+            border-radius: 20px; /* Round corners */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             z-index: 10;
-            border: 1px solid #f2d7d7;
         }
 
         input {
-            padding: 12px;
-            font-size: 1rem;
-            border: 1px solid #d9a7a7;
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 2px solid #ffb3b3;
+            border-radius: 10px;
             text-align: center;
             outline: none;
-            font-family: 'Lora', serif;
+            font-family: 'Nunito', sans-serif;
         }
 
         #screen-question {
@@ -65,121 +68,134 @@
         }
 
         .my-face {
-            width: 160px;
-            height: 160px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            border: 3px solid #f2d7d7;
+            border: 6px solid white;
             object-fit: cover; 
-            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3);
+            margin-bottom: 20px;
+            animation: bounce 2s infinite; 
         }
 
         .nickname {
-            font-family: 'Lora', serif;
-            font-style: italic;
-            color: #d9a7a7;
-            font-size: 1.3em;
-            margin-bottom: -5px;
+            color: #ff4d4d;
+            font-size: 1.5em;
+            font-family: 'Playfair Display', serif; /* Elegant nickname too */
         }
 
         .buttons {
-            margin-top: 40px;
+            margin-top: 30px;
             display: flex;
-            gap: 25px;
+            gap: 20px;
+            align-items: center;
             justify-content: center;
-            position: relative;
+            flex-wrap: wrap;
         }
 
+        /* Cute Chunky Buttons */
         button {
-            padding: 12px 35px;
-            font-size: 1rem;
-            border: 1px solid #b53d5f;
-            background: none;
-            color: #b53d5f;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
             cursor: pointer;
-            font-family: 'Playfair Display', serif;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.4s ease;
+            font-family: 'Fredoka One', cursive; /* Keeping buttons fun */
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        #yes-btn { background-color: #b53d5f; color: white; }
+        #yes-btn { background-color: #ff4d4d; color: white; z-index: 5; }
+        #no-btn { background-color: #ffffff; color: #ff4d4d; border: 2px solid #ff4d4d; }
+
+        .play-again-btn {
+            background-color: white !important;
+            color: #d63384 !important;
+            border: 2px solid #d63384 !important;
+            margin-top: 30px;
+            font-size: 1rem !important;
+        }
 
         #screen-angry {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #4a1024;
-            color: #fff;
+            background: #ff0000;
+            color: white;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 999;
+            z-index: 999; 
+            animation: shake 0.5s;
         }
 
         #screen-gifts {
             display: none;
             width: 90%;
             max-width: 500px;
-            padding-bottom: 60px;
+            padding-top: 20px;
+            padding-bottom: 50px;
         }
 
         details {
             background: white;
-            border-bottom: 1px solid #f2d7d7;
-            padding: 20px 0;
-            margin-bottom: 10px;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             text-align: left;
             cursor: pointer;
         }
         
         summary {
-            font-family: 'Playfair Display', serif;
+            font-weight: bold;
             font-size: 1.2rem;
             list-style: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #7a2a46;
         }
         
-        summary::after { content: '+'; font-weight: 300; }
-        details[open] summary::after { content: '-'; }
+        summary::after { content: '👇'; }
+        details[open] summary::after { content: '❤️'; }
 
         .gift-content {
             margin-top: 15px;
-            font-size: 0.95em;
-            color: #555;
-            animation: fadeIn 0.6s;
+            border-top: 2px dashed #ffb3b3;
+            padding-top: 10px;
         }
 
-        .gift-content img, .gift-content video { width: 100%; margin-top: 15px; border-radius: 2px; }
+        .gift-content img, .gift-content video { width: 100%; border-radius: 10px; margin-top: 10px; }
 
-        /* --- TICKET STYLING --- */
+        /* --- TICKET STYLING (The Cute/Bold Version) --- */
         .ticket {
-            border: 1px solid #b53d5f;
-            padding: 25px;
+            background: #fff0f5;
+            border: 3px dashed #ff4d4d;
+            border-radius: 12px;
+            padding: 20px;
             margin-top: 15px;
             text-align: center;
         }
-        .ticket-highlight { font-size: 1.6rem; font-style: italic; display: block; margin: 15px 0; color: #7a2a46; }
+        .ticket-header { font-size: 1.4rem; font-weight: bold; color: #ff4d4d; text-transform: uppercase; margin-bottom: 10px; }
+        .ticket-body { font-size: 1.2rem; color: #333; line-height: 1.6; }
+        .ticket-highlight { background-color: #ff4d4d; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; display: inline-block; margin: 10px 0; }
+        .ticket-footer { font-size: 0.9rem; color: #666; border-top: 2px dotted #ffb3b3; padding-top: 10px; margin-top: 10px; }
 
         /* --- LETTER STYLING --- */
         .letter-paper {
             background: #fffdfa;
-            padding: 40px 30px;
+            padding: 30px;
             border: 1px solid #eee;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
-            font-family: 'Lora', serif;
-            line-height: 1.8;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            font-family: 'Nunito', sans-serif; /* Readable but cute */
+            line-height: 1.6;
             color: #444;
             text-align: left;
-            font-style: italic;
-            white-space: pre-wrap; /* Keeps your line breaks perfect */
+            white-space: pre-wrap; 
         }
 
-        .play-again-btn { margin-top: 50px; font-size: 0.8rem !important; border-color: #d9a7a7 !important; color: #d9a7a7 !important; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
     </style>
 </head>
 <body>
@@ -188,22 +204,24 @@
         <h2>Authentication</h2>
         <p style="font-weight: bold;">Input the password:</p>
         <input type="password" id="password-input" placeholder="...">
-        <button onclick="checkPassword()" style="margin-top:10px;">Enter</button>
-        <p id="error-msg" style="color:red; display:none; font-size: 0.8em;">Access Denied</p>
+        <button onclick="checkPassword()" style="background:#d63384; color:white; margin-top:10px;">Enter</button>
+        <p id="error-msg" style="color:red; display:none;">Access Denied</p>
     </div>
 
     <div id="screen-question">
         <img src="my-face.jpeg" alt="My Face" class="my-face" onerror="this.src='https://via.placeholder.com/150'">
+        
         <p class="nickname">Hey 羅婆別</p>
         <h1>Will you be my Valentine?</h1>
+        
         <div class="buttons">
-            <button id="yes-btn" onclick="sayYes()">Yes</button>
+            <button id="yes-btn" onclick="sayYes()">YES!</button>
             <button id="no-btn" onclick="clickNo()">No</button>
         </div>
     </div>
 
     <div id="screen-angry">
-        <h1>I don't take "no" for an answer.</h1>
+        <h1 style="font-size: 4em; color: white;">I DON'T TAKE NO<br>FOR AN ANSWER! 😤</h1>
     </div>
 
     <div id="screen-gifts">
@@ -211,7 +229,7 @@
         <p>Here's the presents your perfect girlfriend prepared for you:</p>
         
         <details>
-            <summary>I. A Memory</summary>
+            <summary>🎁 Gift 1: A Memory</summary>
             <div class="gift-content">
                 <p>Remember this day? I miss this so much.</p>
                 <img src="gift1.jpeg" alt="Memory" onerror="this.style.display='none'">
@@ -219,9 +237,9 @@
         </details>
 
         <details>
-            <summary>II. For Your Eyes Only</summary>
+            <summary>💃 Gift 2: For Your Eyes Only</summary>
             <div class="gift-content">
-                <p>A little dance just for you.</p>
+                <p>A little dance just for you!</p>
                 <video controls>
                     <source src="dance.mp4" type="video/mp4">
                     Your browser does not support the video tag.
@@ -230,28 +248,35 @@
         </details>
 
         <details>
-            <summary>III. Our Song</summary>
+            <summary>🎵 Gift 3: Our Song</summary>
             <div class="gift-content">
-                <p>Listen to this and think of me.</p>
-                <a href="https://open.spotify.com/track/7wZzpgH5QYMCtYOpfYrtDa?si=187157ced5814f4a" target="_blank" style="color: #b53d5f; text-decoration: none; border-bottom: 1px solid #b53d5f;">Open Spotify</a>
+                <p>Listen to this and think of me...</p>
+                <a href="https://open.spotify.com/track/7wZzpgH5QYMCtYOpfYrtDa?si=187157ced5814f4a" target="_blank" style="color: #ff4d4d; font-weight: bold; font-size: 1.2rem;">
+                    ▶️ Click to Play on Spotify
+                </a>
             </div>
         </details>
 
         <details>
-            <summary>IV. Special Coupon</summary>
+            <summary>🎟️ Gift 4: Special Coupon</summary>
             <div class="ticket">
-                <div style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; color: #b53d5f;">Official Voucher</div>
+                <div class="ticket-header">✨ The Ultimate Pass ✨</div>
                 <div class="ticket-body">
                     This coupon entitles the bearer to
+                    <br>
                     <span class="ticket-highlight">One BJ</span>
+                    <br>
                     of unlimited duration.
                 </div>
-                <div style="font-size: 0.7rem; color: #aaa; margin-top: 15px;">REDEEMABLE UPON ARRIVAL</div>
+                <div class="ticket-footer">
+                    <span>Valid: Forever</span>
+                    <span>Redeem: Upon Arrival 😉</span>
+                </div>
             </div>
         </details>
 
         <details>
-            <summary>V. A Letter to You</summary>
+            <summary>💌 Gift 5: A Letter to You</summary>
             <div class="gift-content">
 <div class="letter-paper">My Dearest Chun,
 
@@ -272,7 +297,7 @@ Kathy Siyuan Gao</div>
             </div>
         </details>
 
-        <button class="play-again-btn" onclick="playAgain()">Return to beginning</button>
+        <button class="play-again-btn" onclick="playAgain()">🔄 Play Again</button>
     </div>
 
     <script>
@@ -281,32 +306,76 @@ Kathy Siyuan Gao</div>
         function checkPassword() {
             const input = document.getElementById('password-input').value;
             const inputHash = md5(input); 
+
             if (inputHash === SECRET_HASH) {
                 document.getElementById('screen-login').style.display = 'none';
                 document.getElementById('screen-question').style.display = 'flex';
             } else {
                 document.getElementById('error-msg').style.display = 'block';
+                document.getElementById('screen-login').style.animation = "shake 0.5s";
+                setTimeout(() => document.getElementById('screen-login').style.animation = "", 500);
             }
         }
 
         let noClicks = 0;
-        let yesSize = 1;
+        const maxNoClicks = 20; 
+        let yesSize = 1.2; 
+        let noSize = 1.2; 
+
+        const noTexts = [
+            "Are you sure?", "Really?", "Think again!", "Last chance!", 
+            "Don't do this!", "You're breaking my heart!", "羅婆別 please!", 
+            "I'm going to cry...", "Wrong button!", "Try the RED one!",
+            "Stop clicking me!", "I'm warning you...", "Seriously?",
+            "Look at my face!", "Be nice!", "Just click YES!"
+        ];
+
         function clickNo() {
             noClicks++;
-            if (noClicks >= 20) {
+            if (noClicks >= maxNoClicks) {
                 document.getElementById('screen-angry').style.display = 'flex';
-                setTimeout(() => { document.getElementById('screen-angry').style.display = 'none'; resetGame(); }, 3000);
+                setTimeout(() => {
+                    document.getElementById('screen-angry').style.display = 'none';
+                    resetGame();
+                }, 3000);
             } else {
-                yesSize += 0.3;
-                document.getElementById('yes-btn').style.transform = `scale(${yesSize})`;
-                let noBtn = document.getElementById('no-btn');
-                noBtn.style.opacity = (1 - (noClicks / 25));
+                yesSize += 0.4; 
+                document.getElementById('yes-btn').style.fontSize = yesSize + 'rem';
+                noSize -= 0.05;
+                if (noSize < 0.5) noSize = 0.5;
+                document.getElementById('no-btn').style.fontSize = noSize + 'rem';
+                const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
+                document.getElementById('no-btn').innerText = randomText;
             }
         }
 
-        function resetGame() { noClicks = 0; yesSize = 1; document.getElementById('yes-btn').style.transform = 'scale(1)'; document.getElementById('no-btn').style.opacity = '1'; }
-        function sayYes() { document.getElementById('screen-question').style.display = 'none'; document.getElementById('screen-gifts').style.display = 'block'; confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#b53d5f', '#ffc0cb'] }); }
-        function playAgain() { document.getElementById('screen-gifts').style.display = 'none'; document.getElementById('screen-question').style.display = 'flex'; resetGame(); }
+        function resetGame() {
+            noClicks = 0;
+            yesSize = 1.2;
+            noSize = 1.2;
+            document.getElementById('yes-btn').style.fontSize = '1.2rem';
+            document.getElementById('no-btn').style.fontSize = '1.2rem';
+            document.getElementById('no-btn').innerText = "No";
+        }
+
+        function sayYes() {
+            document.getElementById('screen-question').style.display = 'none';
+            document.getElementById('screen-gifts').style.display = 'block';
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            let duration = 3000;
+            let end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        function playAgain() {
+            document.getElementById('screen-gifts').style.display = 'none';
+            document.getElementById('screen-question').style.display = 'flex';
+            resetGame();
+        }
     </script>
 </body>
 </html>
